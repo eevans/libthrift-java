@@ -1,0 +1,5 @@
+libthrift-java (0.8.0-1) unstable; urgency=low
+
+  * Initial release. (Closes: #648453)
+
+ -- Eric Evans <eevans@debian.org>  Thu, 12 Jul 2012 17:58:51 -0600

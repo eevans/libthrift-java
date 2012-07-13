@@ -1,0 +1,7 @@
+The Thrift project creates monolithic release artifacts that include the
+compiler, and a considerable number of language libraries.  For practical
+reasons, this monolithic archive is repackaged into smaller components for
+inclusion in Debian as indiviual source packages.
+
+Source for the tools used to repackage Thrift releases can be found at
+http://git.debian.org/?p=collab-maint/thrift-repackage.git;a=summary.

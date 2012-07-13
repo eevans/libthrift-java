@@ -1,0 +1,27 @@
+Source: libthrift-java
+Maintainer: Eric Evans <eevans@debian.org>
+Section: java
+Priority: extra
+Standards-Version: 3.9.3
+Build-Depends: debhelper (>= 9),
+    libslf4j-java (>= 1.5.11),
+    libservlet2.5-java (>= 6),
+    libcommons-lang-java (>= 2.4),
+    libhttpclient-java (>= 4.1.1),
+    libhttpcore-java (>= 4.1.4),
+    javahelper,
+    default-jdk
+Homepage: http://thrift.apache.org
+Vcs-Git: git://anonscm.debian.org/users/eevans/libthrift-java.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=users/eevans/libthrift-java.git;a=summary
+
+Package: libthrift-java
+Architecture: any
+Depends: ${java:Depends}, ${misc:Depends}
+Description: Java language support for Thrift
+ Thrift is a software framework for the development of reliable and
+ performant communication and data serialization. It combines a software
+ stack with code generation to build services that operate seamlessly
+ across a number of different development languages.
+ .
+ This package provides the Java language support for Thrift.
