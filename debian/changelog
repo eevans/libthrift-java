@@ -1,3 +1,9 @@
+libthrift-java (0.8.0-2) unstable; urgency=low
+
+  * Fix incorrect architecture field.
+
+ -- Eric Evans <eevans@debian.org>  Mon, 20 Aug 2012 17:25:27 -0500
+
 libthrift-java (0.8.0-1) unstable; urgency=low
 
   * Initial release. (Closes: #648453)

@@ -16,7 +16,7 @@ Vcs-Git: git://anonscm.debian.org/users/eevans/libthrift-java.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=users/eevans/libthrift-java.git;a=summary
 
 Package: libthrift-java
-Architecture: any
+Architecture: all
 Depends: ${java:Depends}, ${misc:Depends}
 Description: Java language support for Thrift
  Thrift is a software framework for the development of reliable and
