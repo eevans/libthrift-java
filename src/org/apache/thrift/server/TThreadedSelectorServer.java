@@ -181,7 +181,8 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
   }
 
   // Flag for stopping the server
-  private volatile boolean stopped_ = true;
+  // Please see THRIFT-1795 for the usage of this flag
+  private volatile boolean stopped_ = false;
 
   // The thread handling all accepts
   private AcceptThread acceptThread;
@@ -220,7 +221,6 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
       }
       acceptThread = new AcceptThread((TNonblockingServerTransport) serverTransport_,
         createSelectorThreadLoadBalancer(selectorThreads));
-      stopped_ = false;
       for (SelectorThread thread : selectorThreads) {
         thread.start();
       }
@@ -371,6 +371,10 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
      */
     public void run() {
       try {
+        if (eventHandler_ != null) {
+          eventHandler_.preServe();
+        }
+
         while (!stopped_) {
           select();
         }
@@ -602,7 +606,10 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
       try {
         clientKey = accepted.registerSelector(selector, SelectionKey.OP_READ);
 
-        FrameBuffer frameBuffer = new FrameBuffer(accepted, clientKey, SelectorThread.this);
+        FrameBuffer frameBuffer = processorFactory_.isAsyncProcessor() ?
+                new AsyncFrameBuffer(accepted, clientKey, SelectorThread.this) :
+                new FrameBuffer(accepted, clientKey, SelectorThread.this);
+
         clientKey.attach(frameBuffer);
       } catch (IOException e) {
         LOGGER.warn("Failed to register accepted connection to selector!", e);

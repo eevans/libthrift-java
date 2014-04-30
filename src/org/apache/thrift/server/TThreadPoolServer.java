@@ -20,6 +20,7 @@
 package org.apache.thrift.server;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -73,7 +74,8 @@ public class TThreadPoolServer extends TServer {
   private ExecutorService executorService_;
 
   // Flag for stopping the server
-  private volatile boolean stopped_;
+  // Please see THRIFT-1795 for the usage of this flag
+  private volatile boolean stopped_ = false;
 
   private final TimeUnit stopTimeoutUnit;
 
@@ -120,7 +122,24 @@ public class TThreadPoolServer extends TServer {
       try {
         TTransport client = serverTransport_.accept();
         WorkerProcess wp = new WorkerProcess(client);
-        executorService_.execute(wp);
+        while(true) {
+          int rejections = 0;
+          try {
+            executorService_.execute(wp);
+            break;
+          } catch(RejectedExecutionException ex) {
+            LOGGER.warn("ExecutorService rejected client " + (++rejections) +
+                " times(s)", ex);
+            try {
+              TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+              LOGGER.warn("Interrupted while waiting to place client on" +
+              		" executor queue.");
+              Thread.currentThread().interrupt();
+              break;
+            }
+          }
+        }
       } catch (TTransportException ttx) {
         if (!stopped_) {
           ++failureCount;
