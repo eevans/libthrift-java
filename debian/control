@@ -2,13 +2,14 @@ Source: libthrift-java
 Maintainer: Eric Evans <eevans@debian.org>
 Section: java
 Priority: extra
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Build-Depends: debhelper (>= 9),
     libslf4j-java (>= 1.5.11),
     libservlet2.5-java (>= 6),
     libcommons-lang-java (>= 2.4),
     libhttpclient-java (>= 4.1.1),
     libhttpcore-java (>= 4.1.4),
+    liblog4j1.2-java (>= 1.2.17),
     javahelper,
     default-jdk
 Homepage: http://thrift.apache.org
