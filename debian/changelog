@@ -1,3 +1,9 @@
+libthrift-java (0.9.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Eric Evans <eevans@debian.org>  Sat, 28 Jun 2014 15:58:23 -0500
+
 libthrift-java (0.9.0-1) unstable; urgency=low
 
   * New upstream release.
